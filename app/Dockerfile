@@ -1,8 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1.201 AS build
-#FROM mcr.microsoft.com/dotnet/core/sdk:3.1.100-preview3 AS build
 WORKDIR /app
 COPY . .
-#RUN dotnet restore
 RUN dotnet publish -c Release
 
 FROM nginx:alpine
