@@ -5,5 +5,4 @@ RUN dotnet publish -c Release
 
 FROM nginx:alpine
 COPY --from=build /app/bin/Release/netstandard2.1/publish/wwwroot /usr/share/nginx/html/
-# COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
