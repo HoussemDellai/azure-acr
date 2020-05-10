@@ -13,7 +13,7 @@ $acr = az acr create -n $acrName -g $acrResourceGroup --sku Standard | ConvertFr
 # login to ACR using az CLI (needs Docker running)
 az acr login -n $acrName
 
-# create Blazor/Web Assebly app
+# (optional) create Blazor/Web Assebly app
 dotnet new -i Microsoft.AspNetCore.Components.WebAssembly.Templates::3.2.0-preview5.20216.8
 dotnet new blazorwasm -o app -n webapp
 
@@ -43,6 +43,8 @@ az acr repository show-tags -n $acrName --repository webapp
 
 # build Windows image (build from git repository)
 az acr build -t "$acrName.azurecr.io/windows/webapp:4.0" -r $acrName https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --platform windows
+
+
 
 # Trivi
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy --exit-code 0 --severity MEDIUM,HIGH --ignore-unfixed mvc-app:1.0
