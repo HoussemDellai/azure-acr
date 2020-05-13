@@ -40,9 +40,43 @@ az acr build -t "$acrName.azurecr.io/webapp:2.0" -r $acrName .
 az acr repository show -n $acrName --repository webapp
 az acr repository show-tags -n $acrName --repository webapp
 
-
 # build Windows image (build from git repository)
 az acr build -t "$acrName.azurecr.io/windows/webapp:4.0" -r $acrName https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --platform windows
+
+
+######################################################################################
+    HELM Repositories
+######################################################################################
+
+# set up variables
+$acrName = "acrdemo001"
+$acrResourceGroup = "resourcegroup-acr-demo001"
+# create resource group
+az group create -n $acrResourceGroup -l "westeurope"
+# create ACR
+$acr = az acr create -n $acrName -g $acrResourceGroup --sku Standard | ConvertFrom-Json
+
+# Login to ACR
+az acr login -n $acrName --expose-token
+
+# create a sample Helm chart
+helm create myChart
+
+# package the chart
+helm package myChart
+
+az acr helm push myChart-0.1.0.tgz -n $acrName
+
+az acr helm repo add -n $acrName
+
+helm repo list
+
+helm search repo $acrName
+
+
+
+
+
 
 
 
