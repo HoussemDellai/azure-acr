@@ -38,14 +38,15 @@ stages:
   jobs:
   - job: Read_Variable
     steps:
+
     - task: PowerShell@2
       condition: eq(variables.prevStageVar, 2)
       inputs:
         targetType: 'inline'
         script: 'Write-Host "Get Stage variable: $(prevStageVar)"'
 
-    - powershell: 'Write-Host "Get Stage variable: $(prevStageVar)"'
+    - ${{ if eq(variables.prevStageVar, 2) }}:
+      - powershell: 'Write-Host "Get Stage variable: $(prevStageVar)"'
 
-    ${{ if eq(variables.prevStageVar, 2) }}:
-    # - ${{ if eq(variables.prevStageVar, 2) }}:
+    # ${{ if eq(variables.prevStageVar, 2) }}:
     - powershell: 'Write-Host "#2 Get Stage variable: $(prevStageVar)"'
