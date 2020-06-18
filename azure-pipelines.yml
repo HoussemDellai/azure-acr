@@ -34,13 +34,13 @@ stages:
   dependsOn: Save_Variable
   variables:
     prevStageVar: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
-    prevStageVar4: eq($[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']], 2)
+    # prevStageVar4: eq($[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']], 2)
     
   jobs:
   - job: Read_Variable
-    variables:
-      prevStageVar3: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
-      # prevStageVar2: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
+    # variables:
+    #   prevStageVar3: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
+    #   # prevStageVar2: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
     # condition: eq(variables.prevStageVar3, 2)
     # condition: eq(variables.prevStageVar, 2)
     # condition: and(succeeded(), eq($(prevStageVar), 2))
@@ -51,8 +51,7 @@ stages:
     steps:
 
     - task: PowerShell@2
-      condition: eq(variables.prevStageVar4, true)
-      # condition: eq(variables.prevStageVar, 2)
+      condition: eq(variables.prevStageVar, 2)
       inputs:
         targetType: 'inline'
         script: 'Write-Host "Get Stage variable: $(prevStageVar)"'
