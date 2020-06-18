@@ -41,7 +41,8 @@ stages:
     #   prevStageVar: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
     # condition: and(succeeded(), eq($(prevStageVar), 2))
     # condition: and(succeeded(), eq(variables.prevStageVar, 2))
-    condition: and(succeeded(), eq(variables['prevStageVar'], 2))
+    condition: eq(variables.prevStageVar, 2)
+    # condition: and(succeeded(), eq(variables['prevStageVar'], 2))
 
     steps:
     - powershell: 'Write-Host "Get Stage variable: $(prevStageVar)"'
