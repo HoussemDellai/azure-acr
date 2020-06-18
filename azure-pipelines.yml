@@ -15,7 +15,8 @@ stages:
   jobs:
   - job: Save_Variable
     steps:
-      - pwsh: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]NewVal"
+      - powershell: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]NewVal"
+      # - pwsh: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]NewVal"
         name: MyOutputVar
  
 - stage: Read_Variables
