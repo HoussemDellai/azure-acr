@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  MyVar: 'MyVal'
+  MyVar: -1
   
 stages:
 - stage: Save_Variable
@@ -18,7 +18,7 @@ stages:
   jobs:
   - job: Save_Variable
     steps:
-      - powershell: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]NewVal"
+      - powershell: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]2"
       # - pwsh: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]NewVal"
         name: MyOutputVar
  
