@@ -33,13 +33,13 @@ stages:
 - stage: Read_Variables
   dependsOn: Save_Variable
   variables:
-      prevStageVar: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
+    prevStageVar: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
    
   jobs:
   - job: Read_Variable
     # variables:
     #   prevStageVar: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
-    condition: and(succeeded(), eq(variables['prevStageVar'], '2'))
+    condition: and(succeeded(), eq(variables['prevStageVar'], 2))
 
     steps:
     - powershell: 'Write-Host "Get Stage variable: $(prevStageVar)"'
