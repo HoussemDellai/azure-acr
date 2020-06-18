@@ -39,8 +39,11 @@ stages:
   - job: Read_Variable
     variables:
       prevStageVar3: $(prevStageVar)
+    parameters:
+      prevStageVar3: $(prevStageVar)
       # prevStageVar2: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
-    condition: eq(variables.prevStageVar3, 2)
+    condition: eq(${{prevStageVar3}}, 2)
+    # condition: eq(variables.prevStageVar3, 2)
     # condition: eq(variables.prevStageVar, 2)
     # condition: and(succeeded(), eq($(prevStageVar), 2))
     # condition: and(succeeded(), eq(variables.prevStageVar, 2))
