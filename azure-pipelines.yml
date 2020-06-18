@@ -18,9 +18,17 @@ stages:
   jobs:
   - job: Save_Variable
     steps:
-      - powershell: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]2"
+    - task: PowerShell@2
+      name: MyOutputVar
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]2"
+          
+          Write-Host $(MyVar)
+      # - powershell: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]2"
       # - pwsh: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]NewVal"
-        name: MyOutputVar
+        # name: MyOutputVar
  
 - stage: Read_Variables
   dependsOn: Save_Variable
