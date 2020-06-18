@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Save_Variable
+ 
+  jobs:
+  - job: Save_Variable
+    steps:
+      - pwsh: Write-Host "##vso[task.setvariable variable=MyVar;isOutput=true]NewVal"
+        name: MyOutputVar
+ 
+- stage: Read_Variables
+  dependsOn: Save_Variable
+   
+  jobs:
+    - job: Read_Variable
+      variables:
+        prevStageVar: $[stageDependencies.Save_Variable.Save_Variable.outputs['MyOutputVar.MyVar']]
+      steps:
+      - powershell: 'Write-Host "Get Stage variable: $(prevStageVar)"'
