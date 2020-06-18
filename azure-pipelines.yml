@@ -45,3 +45,7 @@ stages:
         script: 'Write-Host "Get Stage variable: $(prevStageVar)"'
 
     - powershell: 'Write-Host "Get Stage variable: $(prevStageVar)"'
+
+    ${{ if eq(variables.prevStageVar, 2) }}:
+    # - ${{ if eq(variables.prevStageVar, 2) }}:
+    - powershell: 'Write-Host "#2 Get Stage variable: $(prevStageVar)"'
